@@ -1,7 +1,12 @@
 import {useState, useEffect} from 'react';
 import BlogList from "./Lists"
+import useFetch from './usefetch';
 
 function Home(){
+
+    //Custom hook
+    // we are calling the data_fe blogs. 
+    const {data_fe:blogs, isPending, error} = useFetch("http://localhost:8000/blogs")
 
     function HandleClick(){
         console.log("I have been clicked");
@@ -21,20 +26,17 @@ function Home(){
         setName("Luigi")
         setAge(30);
     }
+ 
 
-    const [blogs, setBlogs] = useState(null)
-
-
+/*
     const handleDelete = (id) => {
        const NewBlogs = blogs.filter( blog => (blog.id!==id))
        setBlogs(NewBlogs)
-    }
+    } */
 
-    useEffect(()=>fetch(" http://localhost:8000/blogs")
-    .then(
-        res=>{ return res.json();})
-    .then(
-        data=>setBlogs(data)), []) // This will run only once 
+ 
+              
+    // This will run only once 
 
     // To make sure that the function runs only once then we should use a dependency 
     useEffect(()=>{
@@ -49,9 +51,11 @@ function Home(){
         <button onClick ={function (){Click("James")}}> Click Me func</button>
         <button onClick={NameandAge}>ClickToChangeAge</button>
         <p>My name is {name} and i am {age}</p>
+        {error && <div> {error} </div>}
+        {isPending && <div>Loading ...</div>}
        {/* <BlogList blogs={blogs} title = "All Blogs "/> {/*The component is taking in more than one prop */}
        {/* <BlogList blogs={blogs.filter((blog)=>(blog.author==="John Mike"))}title="John Mike's Blogs"/>*/}
-       {blogs&& <BlogList blogs={blogs} title = "All Blogs " handleDelete ={handleDelete}/>}
+       {blogs&& <BlogList blogs={blogs} title = "All Blogs "/>}
 
     </div>
 }
