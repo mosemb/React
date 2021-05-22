@@ -4,6 +4,7 @@ import Home from "./components/Home"
 import {BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Create from "./components/Create"
 import BlogDetails from "./components/BlogDetails"
+import NotFound from "./components/Notfound"
 
 
 
@@ -26,6 +27,11 @@ function App() {
           <Route path="/blogs/:id">
             <BlogDetails/> {/*The id represents a route parameter if the blog changes*/}
           </Route>
+
+          <Route path = "*">  {/*We put this route below because it will cactc all those that dont match*/}
+            <NotFound/>
+          </Route>
+
 
         </Switch>
       </div>
